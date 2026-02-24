@@ -1,7 +1,6 @@
 #Run this to get dataset
 import kagglehub
 
-# Download latest version
 path = kagglehub.dataset_download("birdy654/cifake-real-and-ai-generated-synthetic-images")
 
 print("Path to dataset files:", path)
@@ -15,7 +14,6 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 from transformers import ViTImageProcessor, ViTForImageClassification
 
-# Define paths based on your Kaggle structure
 base_path = '/kaggle/input/cifake-real-and-ai-generated-synthetic-images'
 train_dir = os.path.join(base_path, 'train')
 test_dir = os.path.join(base_path, 'test')
