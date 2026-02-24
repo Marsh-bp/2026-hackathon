@@ -1,5 +1,5 @@
 # ======================================================
-# PHASE 3: IMPROVE (Adversarial Training) - SEPARATE CELL
+# PHASE 3: IMPROVE (Adversarial Training)
 # ======================================================
 
 import torch
@@ -25,11 +25,11 @@ if 'model' not in locals():
 
 print(f"Starting Phase 3: Improve on {device}...")
 
-# 2. SETUP ROBUST TRAINING
+# 2. SETUP
 optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5) 
 criterion = torch.nn.CrossEntropyLoss()
 
-# 3. THE IMPROVEMENT LOOP (Adversarial Training)
+# 3. IMPROVEMENT LOOP (Adversarial Training)
 # We show the model both clean and attacked images so it learns to be robust.
 
 
@@ -39,14 +39,14 @@ for epoch in range(1):
     for images, labels in tqdm(train_loader, desc="Robust Training"):
         images, labels = images.to(device), labels.to(device)
         
-        # Generate adversarial noise "on the fly"
+        # adversarial noise "on the fly"
         images.requires_grad = True
         outputs = model(images)
         loss = criterion(outputs.logits, labels)
         model.zero_grad()
         loss.backward()
         
-        # Create attacked versions of the images
+        # attacked versions of the images
         data_grad = images.grad.data
         adv_images = fgsm_attack(images, 0.05, data_grad).detach()
         
@@ -63,7 +63,7 @@ for epoch in range(1):
 
     print(f"Phase 3 Training Loss: {robust_loss/len(train_loader):.4f}")
 
-# 4. FINAL RE-EVALUATION (The Proof)
+# 4. FINAL RE-EVALUATION
 print("\n--- FINAL TEST: PERFORMANCE UNDER ATTACK ---")
 model.eval()
 for eps in [0.05, 0.1]:
