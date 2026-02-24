@@ -38,7 +38,7 @@ def break_model(model, device, test_loader, epsilon):
                 if final_pred[i].item() == labels[i].item():
                     correct += 1
                 elif labels[i].item() == 0 and final_pred[i].item() == 1:
-                    # Successfully tricked! Save for visualization
+                    # Successfull
                     if len(adv_examples) < 5:
                         adv_examples.append((images[i], perturbed_data[i], final_pred[i]))
 
